@@ -16,8 +16,8 @@ def videoCut(self, inipath):
         dirname = ''
     videoindices = inis['videoindex'].unique()
     inilist = []
-    if not os.path.exists(path +os.sep+ '切割后_' + dirname):
-        os.mkdir(path +os.sep+ '切割后_' + dirname)
+    if not os.path.exists(path +os.sep+ 'after_' + dirname):
+        os.mkdir(path +os.sep+ 'after_' + dirname)
     for videoindex in videoindices:
         inilist.append(inis[inis['videoindex'] == videoindex])
     for ini in inilist:
@@ -50,12 +50,12 @@ def videoCut(self, inipath):
                 time = time / 60
             start_frames.append(start_frame)
             end_frames.append(end_frame)
-            video_name = ('-'.join(ini.iloc[i])).replace(':','@')
-            video_name = video_name.replace('/','&')
-            video_writers.append(cv2.VideoWriter(path +os.sep+ '切割后_' + dirname + os.sep + video_name + '.mp4',
+            video_name = ('-'.join(ini.iloc[i])).replace(':','_')
+            video_name = video_name.replace('/','_')
+            video_writers.append(cv2.VideoWriter(path +os.sep+ 'after_' + dirname + os.sep + video_name + '.mp4',
                                                  cv2.VideoWriter_fourcc(*'mp4v'), fps, size))
             if not(video_writers[i].isOpened()):
-                print(video_writers[i],path +os.sep+ '切割后_' + dirname + os.sep + video_name + '.mp4')
+                print(video_writers[i],path +os.sep+ 'after_' + dirname + os.sep + video_name + '.mp4')
         success, frame = videoCapture.read()  # 读取第一帧
         frame_index = 1
         while success:
