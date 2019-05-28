@@ -38,6 +38,8 @@ def videoCut(self, inipath):
         video_writers = []
         for i in range(len(ini)):
             size = (int(ini.iloc[i]['W']), int(ini.iloc[i]['H']))
+            print(1)
+            print(size)
             start_frame = 0
             time = 3600
             for t in ini.iloc[i]['start'].split(':'):
@@ -54,6 +56,8 @@ def videoCut(self, inipath):
             video_name = video_name.replace('/','_')
             video_writers.append(cv2.VideoWriter(path +os.sep+ 'after_' + dirname + os.sep + video_name + '.mp4',
                                                  cv2.VideoWriter_fourcc(*'mp4v'), fps, size))
+            print(2)
+            print(size)
             if not(video_writers[i].isOpened()):
                 print(video_writers[i],path +os.sep+ 'after_' + dirname + os.sep + video_name + '.mp4')
         success, frame = videoCapture.read()  # 读取第一帧
@@ -69,7 +73,7 @@ def videoCut(self, inipath):
             frame_index = frame_index + 1
             if frame_index % 10000 == 0:
                 self.textBrowser.append('processing frame ' + str(frame_index))
-            print(frame_index)
+            #print(frame_index)
         for i in range(len(ini)):
             video_writers[i].release()
     cv2.destroyAllWindows()
