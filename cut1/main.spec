@@ -5,7 +5,7 @@ block_cipher = None
 
 a = Analysis(['main.py'],
              pathex=['C:\\Users\\xiaoyisha\\PycharmProjects\\cut'],
-             binaries=[('C:\\python36\\Lib\\site-packages\\cv2\\opencv_ffmpeg401_64.dll', '.'), ('kernel32.dll', '.'), ('user32.dll', '.'), ('ws2_32.dll', '.'), ('ffmpeg.dll', '.'), ('vcruntime140.dll', '.')],
+             binaries=[('C:\\python36\\Lib\\site-packages\\cv2\\opencv_ffmpeg401_64.dll', '.'), ('kernel32.dll', '.'), ('user32.dll', '.'), ('ws2_32.dll', '.'), ('ffmpeg.dll', '.'), ('vcruntime140.dll', '.'), ('opencv_imgproc401_64.dll', '.')],
              datas=[],
              hiddenimports=[],
              hookspath=[],

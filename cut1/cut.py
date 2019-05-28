@@ -38,8 +38,6 @@ def videoCut(self, inipath):
         video_writers = []
         for i in range(len(ini)):
             size = (int(ini.iloc[i]['W']), int(ini.iloc[i]['H']))
-            print(1)
-            print(size)
             start_frame = 0
             time = 3600
             for t in ini.iloc[i]['start'].split(':'):
@@ -56,8 +54,6 @@ def videoCut(self, inipath):
             video_name = video_name.replace('/','_')
             video_writers.append(cv2.VideoWriter(path +os.sep+ 'after_' + dirname + os.sep + video_name + '.mp4',
                                                  cv2.VideoWriter_fourcc(*'mp4v'), fps, size))
-            print(2)
-            print(size)
             if not(video_writers[i].isOpened()):
                 print(video_writers[i],path +os.sep+ 'after_' + dirname + os.sep + video_name + '.mp4')
         success, frame = videoCapture.read()  # 读取第一帧
