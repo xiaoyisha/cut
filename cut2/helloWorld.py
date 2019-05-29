@@ -12,23 +12,31 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(600, 370)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser.setGeometry(QtCore.QRect(70, 50, 321, 121))
+        self.textBrowser.setGeometry(QtCore.QRect(100, 50, 400, 121))
         self.textBrowser.setObjectName("textBrowser")
+
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(70, 200, 141, 61))
+        self.pushButton.setGeometry(QtCore.QRect(120, 220, 110, 61))
         self.pushButton.setObjectName("pushButton")
+
+        self.length = QtWidgets.QPushButton(self.centralwidget)
+        self.length.setGeometry(QtCore.QRect(250, 220, 110, 61))
+        self.length.setText("Input length")
+
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(240, 200, 151, 61))
+        self.pushButton_2.setGeometry(QtCore.QRect(370, 220, 110, 61))
         self.pushButton_2.setObjectName("pushButton_2")
         MainWindow.setCentralWidget(self.centralwidget)
+
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 18))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
+
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
@@ -36,6 +44,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.pushButton.clicked.connect(MainWindow.read)
         self.pushButton_2.clicked.connect(MainWindow.start)
+        self.length.clicked.connect(MainWindow.input_length)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets
 from helloWorld import Ui_MainWindow
-from PyQt5.QtWidgets import QFileDialog, QApplication
+from PyQt5.QtWidgets import QFileDialog, QApplication,QInputDialog
 from cut import videoCut
 import sys
 from PyQt5.QtCore import *
@@ -10,13 +10,21 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super(MyWindow, self).__init__()
         self.setupUi(self)
         self.ini_path = ''
+        self.length = ''
 
     def read(self):
-        self.ini_path, ok = QFileDialog.getOpenFileName(self, 'select file', '/home')
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        self.ini_path, ok = QFileDialog.getOpenFileName(self, "Choose Contact Icon", "", None, options=options)
         if ok:
             self.textBrowser.append(self.ini_path)
             self.textBrowser.append("Loaded Successfully...")
 
+    def input_length(self):
+        lengthDialog = QInputDialog()
+        self.length, ok = lengthDialog.getText(self, "input length", "input all length")
+        if ok:
+            self.textBrowser.append(str(self.length))
     def start(self):
         self.textBrowser.append("already start")
         if self.ini_path == '':
@@ -24,7 +32,7 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             self.textBrowser.append("Cutting, please wait")
             QApplication.processEvents()
-            videoCut(self, self.ini_path)
+            videoCut(self, self.ini_path, self.length)
             QApplication.processEvents()
             self.textBrowser.append("Done!")
 
