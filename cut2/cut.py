@@ -54,18 +54,18 @@ def videoCut(self, inipath, length):
             if not (video_writers[k-1].isOpened()):
                 print(video_writers, path + os.sep + 'after_' + dirname + os.sep + videoindex
                       + str(k).zfill(2) + '.mp4')
-            start_time = tosecond(min(ini[ini['start'] >= totime(end_time)]['start']))
-            start_time_1 = start_time - ranint
+            start_time = min(ini[ini['start'] >= totime(end_time)]['start'])
+            start_time_1 = tosecond(start_time) - ranint
             end_time = start_time_1 + length_vedio
-            end_time_1 = max(ini[(totime(start_time) <= ini['start']) & (ini['start'] < totime(end_time))]['end'])
-            end_time_1 = tosecond(end_time_1)
+            end_time_1 = max(ini[(start_time <= ini['start']) & (ini['start'] < totime(end_time))]['end'])
+            end_time_1 = tosecond(end_time_1) if tosecond(end_time_1) > end_time else end_time
             start_times.append(start_time_1)
             end_times.append(end_time_1)
-            indicies = (inis['videoindex'] == videoindex) & (totime(start_time) <= inis['start']) & (
+            indicies = (inis['videoindex'] == videoindex) & (start_time <= inis['start']) & (
                         inis['start'] < totime(end_time))
             inis.loc[indicies, 'videoindex'] = inis[indicies]['videoindex'].apply(lambda x: x + '-' + str(k).zfill(2))
-            inis.loc[indicies, 'start'] = inis[indicies]['start'].apply(lambda x: totime(tosecond(x) - start_time + 5))
-            inis.loc[indicies, 'end'] = inis[indicies]['end'].apply(lambda x: totime(tosecond(x) - start_time + 5))
+            inis.loc[indicies, 'start'] = inis[indicies]['start'].apply(lambda x: totime(tosecond(x) - start_time_1))
+            inis.loc[indicies, 'end'] = inis[indicies]['end'].apply(lambda x: totime(tosecond(x) - start_time_1))
         inis['duration'] = inis.apply(lambda row:tosecond(row['end']) - tosecond(row['start']), axis=1)
         inis = inis[['videoindex', 'actionindex', 'action', 'start', 'end', 'duration', 'X', 'Y', 'W', 'H']]
         inis.to_excel(path + os.sep + 'after_' + dirname + os.sep + excelname.split('.')[0] + "_new.xlsx",
@@ -83,6 +83,8 @@ def videoCut(self, inipath, length):
                 self.textBrowser.append('Processing frame ' + str(frame_index))
             if all([frame_index > x*fps for x in end_times]):
                 break
+        for i in range(len(video_writers)):
+            video_writers[i].release()
     cv2.destroyAllWindows()
 
 
