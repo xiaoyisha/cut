@@ -27,7 +27,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
+            <state relative-caret-position="-120">
               <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
             </state>
           </provider>
@@ -36,8 +36,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cut.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="84" column="21" lean-forward="true" selection-start-line="84" selection-start-column="21" selection-end-line="84" selection-end-column="21" />
+            <state relative-caret-position="320">
+              <caret line="54" column="71" selection-start-line="54" selection-start-column="71" selection-end-line="54" selection-end-column="71" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -66,7 +66,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="714" />
+    <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -123,17 +123,19 @@
       <option name="presentableId" value="Default" />
       <updated>1559041284338</updated>
       <workItem from="1559041285943" duration="26365000" />
-      <workItem from="1559232205342" duration="1551000" />
+      <workItem from="1559232205342" duration="1699000" />
+      <workItem from="1559293282676" duration="4776000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27916000" />
+    <option name="totallyTimeSpent" value="32840000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24711816" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2514409" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -169,15 +171,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
+        <state relative-caret-position="-120">
           <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cut.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="84" column="21" lean-forward="true" selection-start-line="84" selection-start-column="21" selection-end-line="84" selection-end-column="21" />
+        <state relative-caret-position="320">
+          <caret line="54" column="71" selection-start-line="54" selection-start-column="71" selection-end-line="54" selection-end-column="71" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>

@@ -38,6 +38,8 @@ def videoCut(self, inipath, length):
             self.textBrowser.append('Fail to open ' + video_path)
             continue
         fps = videoCapture.get(cv2.CAP_PROP_FPS)
+        height = videoCapture.get(cv2.CAP_PROP_FRAME_HEIGHT)
+        width = videoCapture.get(cv2.CAP_PROP_FRAME_WIDTH)
         # fourcc = videoCapture.get(cv2.CAP_PROP_FOURCC)
         # fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         start_times = []
@@ -50,12 +52,14 @@ def videoCut(self, inipath, length):
             ranint = random.randint(1, 10)
             video_writers.append(cv2.VideoWriter(path + os.sep + 'after_' + dirname + os.sep + videoindex + '-' +
                                            str(k).zfill(2) + '.mp4', cv2.VideoWriter_fourcc(*'mp4v'),
-                                           fps, (1920, 1080)))
+                                           fps, (int(width),int(height))))
             if not (video_writers[k-1].isOpened()):
                 print(video_writers, path + os.sep + 'after_' + dirname + os.sep + videoindex
                       + str(k).zfill(2) + '.mp4')
             start_time = min(ini[ini['start'] >= totime(end_time)]['start'])
             start_time_1 = tosecond(start_time) - ranint
+            if start_time_1 < 0:
+                start_time_1 = 0
             end_time = start_time_1 + length_vedio
             end_time_1 = max(ini[(start_time <= ini['start']) & (ini['start'] < totime(end_time))]['end'])
             end_time_1 = tosecond(end_time_1) if tosecond(end_time_1) > end_time else end_time
@@ -68,10 +72,9 @@ def videoCut(self, inipath, length):
             inis.loc[indicies, 'end'] = inis[indicies]['end'].apply(lambda x: totime(tosecond(x) - start_time_1))
         inis['duration'] = inis.apply(lambda row:tosecond(row['end']) - tosecond(row['start']), axis=1)
         inis = inis[['videoindex', 'actionindex', 'action', 'start', 'end', 'duration', 'X', 'Y', 'W', 'H']]
-        inis.to_excel(path + os.sep + 'after_' + dirname + os.sep + excelname.split('.')[0] + "_new.xlsx",
-                      header=['视频编号','行为编号','行为类别','起始时间','截止时间','持续时间','X','Y','宽','高'],index=False)
         success, frame = videoCapture.read()  # 读取第一帧
         frame_index = 1
+        assert(k==len(video_writers))
         while success:
             for i in range(k):
                 if start_times[i] * fps < frame_index <= end_times[i] * fps:
@@ -79,12 +82,16 @@ def videoCut(self, inipath, length):
                     QApplication.processEvents()
             success, frame = videoCapture.read()  # 循环读取下一帧
             frame_index = frame_index + 1
+            if frame_index % 100 == 0:
+                print(frame_index)
             if frame_index % 10000 == 0:
                 self.textBrowser.append('Processing frame ' + str(frame_index))
             if all([frame_index > x*fps for x in end_times]):
                 break
         for i in range(len(video_writers)):
             video_writers[i].release()
+    inis.to_excel(path + os.sep + 'after_' + dirname + os.sep + excelname.split('.')[0] + "_new.xlsx",
+                  header=['视频编号', '行为编号', '行为类别', '起始时间', '截止时间', '持续时间', 'X', 'Y', '宽', '高'], index=False)
     cv2.destroyAllWindows()
 
 
