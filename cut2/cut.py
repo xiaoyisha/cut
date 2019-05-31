@@ -9,9 +9,13 @@ def tosecond(t):
     return t.hour * 3600 + t.minute * 60 + t.second
 def totime(s):
     return time(hour=int(s/3600), minute=int(s % 3600/60), second=s % 60)
+
 def videoCut(self, inipath, length):
     inipath = inipath.replace('/', os.sep)
     inis = pd.read_excel(inipath, names=['videoindex', 'actionindex', 'action', 'start', 'end', 'X', 'Y', 'W', 'H'])
+    if not type(inis['start'][0]) == time:
+        inis['start'] = pd.to_datetime(inis['start']).dt.time
+        inis['end'] = pd.to_datetime(inis['end']).dt.time
     path = os.sep.join(inipath.split(os.sep)[:-2])
     excelname = inipath.split(os.sep)[-1]
     if path == '':
