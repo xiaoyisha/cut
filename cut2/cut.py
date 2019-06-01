@@ -10,12 +10,13 @@ def tosecond(t):
 def totime(s):
     return time(hour=int(s/3600), minute=int(s % 3600/60), second=s % 60)
 
-def videoCut(self, inipath, length):
+def videoCut(self, inipath, length_vedio):
     inipath = inipath.replace('/', os.sep)
     inis = pd.read_excel(inipath, names=['videoindex', 'actionindex', 'action', 'start', 'end', 'X', 'Y', 'W', 'H'])
-    if not type(inis['start'][0]) == time:
-        inis['start'] = pd.to_datetime(inis['start']).dt.time
-        inis['end'] = pd.to_datetime(inis['end']).dt.time
+    inis['start'] = inis['start'].apply(lambda x: str(x))
+    inis['end'] = inis['end'].apply(lambda x: str(x))
+    inis['start'] = pd.to_datetime(inis['start']).dt.time
+    inis['end'] = pd.to_datetime(inis['end']).dt.time
     path = os.sep.join(inipath.split(os.sep)[:-2])
     excelname = inipath.split(os.sep)[-1]
     if path == '':
@@ -25,14 +26,12 @@ def videoCut(self, inipath, length):
     else:
         dirname = ''
     videoindices = inis['videoindex'].unique()
-    lengthlist = length.split(' ')
-    assert(len(videoindices) == len(lengthlist))
     if not os.path.exists(path + os.sep + 'after_' + dirname):
         os.mkdir(path + os.sep + 'after_' + dirname)
     for videoindex in videoindices:
         ini = inis[inis['videoindex'] == videoindex]
         ini = ini.reset_index(drop=True)
-        length_vedio = int(lengthlist.pop(0))
+
         video_path = path + os.sep + dirname + os.sep + videoindex + '.mp4'
         videoCapture = cv2.VideoCapture(video_path)
         if videoCapture.isOpened():
@@ -75,6 +74,7 @@ def videoCut(self, inipath, length):
             inis.loc[indicies, 'start'] = inis[indicies]['start'].apply(lambda x: totime(tosecond(x) - start_time_1))
             inis.loc[indicies, 'end'] = inis[indicies]['end'].apply(lambda x: totime(tosecond(x) - start_time_1))
         inis['duration'] = inis.apply(lambda row:tosecond(row['end']) - tosecond(row['start']), axis=1)
+        print(inis.info())
         inis = inis[['videoindex', 'actionindex', 'action', 'start', 'end', 'duration', 'X', 'Y', 'W', 'H']]
         success, frame = videoCapture.read()  # 读取第一帧
         frame_index = 1

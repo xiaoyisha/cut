@@ -22,7 +22,7 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def input_length(self):
         lengthDialog = QInputDialog()
-        self.length, ok = lengthDialog.getText(self, "Input length", "Input all length")
+        self.length, ok = lengthDialog.getInt(self, "Input length", "Input all length")
         if ok:
             self.textBrowser.append(str(self.length))
     def start(self):
